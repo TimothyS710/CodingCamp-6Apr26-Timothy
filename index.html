@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Life Dashboard</title>
+
+  <!-- Google Fonts: Playfair Display for headings, Inter for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Inline theme apply: runs synchronously before first paint to prevent FOUC -->
+  <script>
+    try {
+      const t = JSON.parse(localStorage.getItem('ld_theme'));
+      document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+    } catch(e) {}
+  </script>
+</head>
+<body>
+
+  <header class="dashboard-header">
+    <h1 class="dashboard-title">Life Dashboard</h1>
+    <button id="theme-toggle" aria-label="Toggle light/dark theme">☀️ Light Mode</button>
+  </header>
+
+  <main class="dashboard-grid">
+
+    <!-- Greeting & Time Widget -->
+    <section class="widget-card" id="greeting-widget" aria-labelledby="greeting-heading">
+      <h2 id="greeting-heading" class="widget-title">Greeting &amp; Time</h2>
+      <div id="greeting-time" class="time-display" aria-live="polite">--:--:--</div>
+      <div id="greeting-date" class="date-display">---</div>
+      <div id="greeting-text" class="greeting-text" aria-live="polite">Hello</div>
+      <form id="greeting-name-form" class="name-form">
+        <label for="greeting-name-input" class="sr-only">Your name</label>
+        <input
+          type="text"
+          id="greeting-name-input"
+          class="widget-input"
+          placeholder="Enter your name…"
+          maxlength="50"
+          autocomplete="off"
+        />
+        <button type="submit" class="widget-btn">Save</button>
+      </form>
+    </section>
+
+    <!-- Pomodoro Timer Widget -->
+    <section class="widget-card" id="pomodoro-widget" aria-labelledby="pomodoro-heading">
+      <h2 id="pomodoro-heading" class="widget-title">Pomodoro Timer</h2>
+      <div id="pomodoro-display" class="timer-display" aria-live="polite" aria-atomic="true">25:00</div>
+      <div id="pomodoro-notification" class="timer-notification" aria-live="assertive" hidden>
+        🎉 Session complete!
+      </div>
+      <div class="timer-controls">
+        <button id="pomodoro-start" class="widget-btn">▶ Start</button>
+        <button id="pomodoro-stop" class="widget-btn" hidden>⏸ Stop</button>
+        <button id="pomodoro-reset" class="widget-btn widget-btn--secondary">↺ Reset</button>
+      </div>
+      <form id="pomodoro-duration-form" class="duration-form">
+        <label for="pomodoro-duration-input" class="widget-label">Custom duration (minutes)</label>
+        <input
+          type="number"
+          id="pomodoro-duration-input"
+          class="widget-input"
+          placeholder="25"
+          min="1"
+          max="120"
+        />
+        <button type="submit" class="widget-btn">Set</button>
+      </form>
+    </section>
+
+    <!-- Smart To-Do List Widget -->
+    <section class="widget-card" id="todo-widget" aria-labelledby="todo-heading">
+      <h2 id="todo-heading" class="widget-title">Smart To-Do List</h2>
+      <form id="todo-add-form" class="add-form">
+        <label for="todo-input" class="sr-only">New task</label>
+        <input
+          type="text"
+          id="todo-input"
+          class="widget-input"
+          placeholder="Add a new task…"
+          maxlength="200"
+          autocomplete="off"
+        />
+        <button type="submit" class="widget-btn">Add</button>
+      </form>
+      <div id="todo-error" class="inline-error" aria-live="polite" hidden></div>
+      <div class="todo-toolbar">
+        <button id="todo-sort-btn" class="widget-btn widget-btn--secondary">⇅ Sort</button>
+      </div>
+      <ul id="todo-list" class="task-list" aria-label="Task list"></ul>
+    </section>
+
+    <!-- Quick Links Widget -->
+    <section class="widget-card" id="links-widget" aria-labelledby="links-heading">
+      <h2 id="links-heading" class="widget-title">Quick Links</h2>
+      <form id="links-add-form" class="add-form">
+        <label for="links-name-input" class="sr-only">Link name</label>
+        <input
+          type="text"
+          id="links-name-input"
+          class="widget-input"
+          placeholder="Name…"
+          maxlength="50"
+          autocomplete="off"
+        />
+        <label for="links-url-input" class="sr-only">URL</label>
+        <input
+          type="url"
+          id="links-url-input"
+          class="widget-input"
+          placeholder="https://…"
+          autocomplete="off"
+        />
+        <button type="submit" class="widget-btn">Add</button>
+      </form>
+      <div id="links-error" class="inline-error" aria-live="polite" hidden></div>
+      <div id="links-list" class="links-list" aria-label="Quick links"></div>
+    </section>
+
+  </main>
+
+  <!-- app.js at end of body: DOM is ready, no defer needed -->
+  <script src="js/app.js"></script>
+</body>
+</html>
